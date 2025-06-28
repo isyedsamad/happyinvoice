@@ -1,0 +1,12 @@
+user : 
+    - name
+    - username
+    - profile
+    - plan
+    - limit
+
+profile :
+    - Logo
+    - Company
+    - Client
+    - Product

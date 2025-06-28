@@ -1,26 +1,251 @@
 @import "tailwindcss";
 
+* {
+    font-family: "Poppins", sans-serif;
+    font-style: normal;
+}
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+    --greenPanel: #2BB673;
+    --greenDarkPanel: #287a57;
+    --bluePanel: #4CB1F7;
+    --backPanel: #FAFAFA;
+    --textPanel: #2E2E2E;
+    --greenSuccess: #6EE7B7;
+
+    --themeWhite: #ffffff;
+    --themeBlack: #000000;
+    --themeBackground: #ffffff;
+    --themeGreyBlue: #cacaca;
+    --themeGreyBlueDark: #adadad;
+    --themeBlackTrans: rgba(0, 0, 0, 0.6);
+    --themeWhiteTrans: rgba(255, 255, 255, 0.6);
+
+    /* --themeWhite: #000;
+    --themeBlack: #fff;
+    --themeBackground: #000012;
+    --themeGreyBlue: #00012e;
+    --themeGreyBlueDark: #000121;
+    --themeBlackTrans: rgba(255, 255, 255, 0.6);
+    --themeWhiteTrans: rgba(0, 0, 0, 0.6); */
+
+    --greenLightPanel: #A7EBC6;
+    --greenLightestPanel: #D4F7E5;
+    --greenLightest2Panel: #dff5e9;
+    --greenDarkPanel: #287a57;
+    --greenDarkestPanel: #1E7F52;
+
+    /* --greenLightPanel: rgba(167, 235, 198, 0.3);
+    --greenLightestPanel: rgba(212, 247, 229, 0.3);
+    --greenLightest2Panel: #dff5e9;
+    --greenDarkPanel: #287a57;
+    --greenDarkestPanel: #1E7F52; */
+    
+    --themeGrey33: #333333;
+    --themeGrey44: #444444;
+    --themeGrey66: #666666;
+    --themeGrey88: #888888;
+    --themeGrey99: #999999;
+
+    /* --themeGrey33: #888888;
+    --themeGrey44: #999999;
+    --themeGrey66: #666666;
+    --themeGrey88: #888888;
+    --themeGrey99: #999999; */
+
+    --black: #000;
+    --blackTrans: rgba(0, 0, 0, 0.6);
+    --whiteTrans: rgba(255, 255, 255, 0.6);
+    --lightBlack: #000818;
+    --blueBlack: #0f141a;
+    --blueBlackDark: #090c0f;
+    --blueBlackDarkest: #07090c;
+    --whiteGreyBlack: #ffffff;
+    --textBlack: #000;
+    --textWhite: #fff;
+    --transBlack: rgba(0, 0, 0, 0.6);
+    --white: #fff;
+    --orange: #E45011;
+    --darkorange: #521d04;
+    --orangetrans25: rgba(228, 80, 17, 0.25);
+    --greycc: #ccc;
+    --greyea: #eaeaea;
+    --greyeatrans: rgba(234, 234, 234, 0.8);
+    --darkGray: #181818;
+    --grey33: #333333;
+    --grey44: #444444;
+    --grey66: #666666;
+    --grey88: #888888;
+    --grey99: #999999;
+    --lightblue: #0075bb;
+    --darklightblue: #041e52;
+    --lightbluetrans25: rgba(0, 117, 187, 0.25);
+    --red: #c50202;
+    --darkred: #520404;
+    --redtrans25: rgba(197, 2, 2, 0.25);
+    --teal: #00968a;
+    --darkteal: #04524e;
+    --tealtrans25: rgba(0, 212, 194, 0.25);
+    --green: #1BBA00;
+    --darkgreen: #055204;
+    --greentrans25: rgba(127, 186, 0, 0.25);
+    --yellow: #c5a902;
+    --darkyellow: #524a04;
+    --yellowtrans25: rgba(197, 169, 2, 0.25);
+    --purple: #9007ed;
+    --darkpurple: #330452;
+    --purpletrans25: rgba(185, 82, 255, 0.25);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+    background-color: var(--white);
+}
+
+#loading {
+    width: 65px;
+    height: 65px;
+    border: 8px solid var(--greycc);
+    border-top: 8px solid var(--greenPanel);
+    border-radius: 100%;
+    display: inline-block;
+    animation: 1.5s ease-in 0s infinite both loading;
+}
+
+@keyframes loading {
+    from {
+        rotate: 0deg;
+    }
+    to {
+        rotate: 360deg;
+    }
+}
+
+
+
+.btnGreen {
+    @apply text-[15px] py-3 px-6 bg-[var(--greenPanel)] text-[var(--themeWhite)] font-semibold rounded-md cursor-pointer hover:bg-[var(--greenDarkPanel)] active:bg-[var(--greenDarkPanel)];
+}
+
+.btnGreenLight {
+    @apply text-[15px] py-3 px-6 bg-[var(--greenLightPanel)] text-[var(--themeBlack)] font-semibold rounded-md cursor-pointer hover:bg-[var(--greenLightestPanel)] active:bg-[var(--greenLightPanel)];
+}
+
+.btnGreenLightest {
+    @apply text-[15px] py-3 px-6 bg-[var(--greenLightestPanel)] text-[var(--themeBlack)] font-semibold rounded-md cursor-pointer hover:bg-[var(--greenLightPanel)] active:bg-[var(--greenLightestPanel)];
+}
+
+.happyinput {
+    @apply w-full py-3 px-5 md:py-2 box-border outline-0 border-2 border-[var(--grey66)] text-[var(--themeBlack)] placeholder:text-gray-500 rounded-md focus:border-[var(--greenPanel)];
+}
+
+
+
+
+.poppins-thin {
+    font-family: "Poppins", sans-serif;
+    font-weight: 100;
+    font-style: normal;
+}
+
+.poppins-extralight {
+    font-family: "Poppins", sans-serif;
+    font-weight: 200;
+    font-style: normal;
+}
+
+.poppins-light {
+    font-family: "Poppins", sans-serif;
+    font-weight: 300;
+    font-style: normal;
+}
+
+.poppins-regular {
+    font-family: "Poppins", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.poppins-medium {
+    font-family: "Poppins", sans-serif;
+    font-weight: 500;
+    font-style: normal;
+}
+
+.poppins-semibold {
+    font-family: "Poppins", sans-serif;
+    font-weight: 600;
+    font-style: normal;
+}
+
+.poppins-bold {
+    font-family: "Poppins", sans-serif;
+    font-weight: 700;
+    font-style: normal;
+}
+
+.poppins-extrabold {
+    font-family: "Poppins", sans-serif;
+    font-weight: 800;
+    font-style: normal;
+}
+
+.poppins-black {
+    font-family: "Poppins", sans-serif;
+    font-weight: 900;
+    font-style: normal;
+}
+
+.poppins-thin-italic {
+    font-family: "Poppins", sans-serif;
+    font-weight: 100;
+    font-style: italic;
+}
+
+.poppins-extralight-italic {
+    font-family: "Poppins", sans-serif;
+    font-weight: 200;
+    font-style: italic;
+}
+
+.poppins-light-italic {
+    font-family: "Poppins", sans-serif;
+    font-weight: 300;
+    font-style: italic;
+}
+
+.poppins-regular-italic {
+    font-family: "Poppins", sans-serif;
+    font-weight: 400;
+    font-style: italic;
+}
+
+.poppins-medium-italic {
+    font-family: "Poppins", sans-serif;
+    font-weight: 500;
+    font-style: italic;
+}
+
+.poppins-semibold-italic {
+    font-family: "Poppins", sans-serif;
+    font-weight: 600;
+    font-style: italic;
+}
+
+.poppins-bold-italic {
+    font-family: "Poppins", sans-serif;
+    font-weight: 700;
+    font-style: italic;
+}
+
+.poppins-extrabold-italic {
+    font-family: "Poppins", sans-serif;
+    font-weight: 800;
+    font-style: italic;
+}
+
+.poppins-black-italic {
+    font-family: "Poppins", sans-serif;
+    font-weight: 900;
+    font-style: italic;
 }
