@@ -10,7 +10,7 @@ const BlockTab = () => {
               Empower your brand with us.
             </p>
             <p className="text-sm md:text-md font-medium mt-2 text-white">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Placeat
+              Hello Lorem ipsum dolor sit amet consectetur adipisicing elit. Placeat
               soluta sequi esse consectetur voluptatibus ipsam nisi illum saepe
               nostrum aliquam facere, nihil aliquid et quibusdam at sint rerum
               qui exercitationem?

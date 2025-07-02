@@ -5,6 +5,7 @@ import MainDiv from '@/app/components/main/MainDiv'
 import Testimonial from '@/app/components/main/Testimonial'
 import WhyChooseUs from '@/app/components/main/WhyChooseUs'
 import React from 'react'
+import Pricing from '../components/main/Pricing'
 
 const HomePage = () => {
     return (
@@ -13,6 +14,7 @@ const HomePage = () => {
             <MainDiv />
             <WhyChooseUs />
             <BlockTab />
+            <Pricing />
             <Testimonial />
             <Footer />
         </>

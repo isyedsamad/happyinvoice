@@ -87,14 +87,16 @@ const Sidebar = (props) => {
                                 </div>
                             </div>
                         ) : (
-                            <div className='flex justify-start items-center hover:text-[var(--themeBlack)] font-semibold text-[var(--grey88)] px-5 py-4 cursor-pointer'>
-                                <div className='text-sm flex flex-1'>
-                                    <div className='w-7 mr-3 flex justify-center items-center'>
-                                        <i className='fa-solid fa-box-open'></i>
+                            <Link href='/portal/product'>
+                                <div className='flex justify-start items-center hover:text-[var(--themeBlack)] font-semibold text-[var(--grey88)] px-5 py-4 cursor-pointer'>
+                                    <div className='text-sm flex flex-1'>
+                                        <div className='w-7 mr-3 flex justify-center items-center'>
+                                            <i className='fa-solid fa-box-open'></i>
+                                        </div>
+                                        Product
                                     </div>
-                                    Product
                                 </div>
-                            </div>
+                            </Link>
                         )}
                         <div className='bg-gray-300 h-[0.6px] w-full my-1'></div>
                         {props.page == "settings" ? (
@@ -107,14 +109,16 @@ const Sidebar = (props) => {
                                 </div>
                             </div>
                         ) : (
-                            <div className='flex justify-start items-center hover:text-[var(--themeBlack)] font-semibold text-[var(--grey88)] px-5 py-4 cursor-pointer'>
-                                <div className='text-sm flex flex-1'>
-                                    <div className='w-7 mr-3 flex justify-center items-center'>
-                                        <i className='fa-solid fa-gear'></i>
+                            <Link href='/portal/settings'>
+                                <div className='flex justify-start items-center hover:text-[var(--themeBlack)] font-semibold text-[var(--grey88)] px-5 py-4 cursor-pointer'>
+                                    <div className='text-sm flex flex-1'>
+                                        <div className='w-7 mr-3 flex justify-center items-center'>
+                                            <i className='fa-solid fa-gear'></i>
+                                        </div>
+                                        Settings
                                     </div>
-                                    Settings
                                 </div>
-                            </div>
+                            </Link>
                         )}
                     </div>
                 </div>

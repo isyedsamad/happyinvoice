@@ -6,9 +6,8 @@
 }
 
 :root {
+    --greenTheme: #2BB673;
     --greenPanel: #2BB673;
-    --greenDarkPanel: #287a57;
-    --bluePanel: #4CB1F7;
     --backPanel: #FAFAFA;
     --textPanel: #2E2E2E;
     --greenSuccess: #6EE7B7;
@@ -52,6 +51,41 @@
     --themeGrey66: #666666;
     --themeGrey88: #888888;
     --themeGrey99: #999999; */
+
+    --greenPanelSet: #2BB673;
+    --greenLightPanelSet: #A7EBC6;
+    --greenLightestPanelSet: #D4F7E5;
+    --greenLightest2PanelSet: #dff5e9;
+    --greenDarkPanelSet: #287a57;
+    --greenDarkestPanelSet: #1E7F52;
+
+    --bluePanel:         #2B6CB0;
+    --blueLightPanel:    #A3C9F5;
+    --blueLightestPanel: #D4E9FB;
+    --blueLightest2Panel:#E3F1FC;
+    --blueDarkPanel:     #24538C;
+    --blueDarkestPanel:  #1A3C6E;
+
+    --redPanel:          #E53E3E;
+    --redLightPanel:     #FEB2B2;
+    --redLightestPanel:  #FEE2E2;
+    --redLightest2Panel: #FDE8E8;
+    --redDarkPanel:      #C53030;
+    --redDarkestPanel:   #9B2C2C;
+
+    --purplePanel:         #805AD5;
+    --purpleLightPanel:    #D6BCFA;
+    --purpleLightestPanel: #F3E8FD;
+    --purpleLightest2Panel:#F5EDFE;
+    --purpleDarkPanel:     #6B46C1;
+    --purpleDarkestPanel:  #553C9A;
+
+    --orangePanel:         #F97316;
+    --orangeLightPanel:    #FECBA4;
+    --orangeLightestPanel: #FFF3E5;
+    --orangeLightest2Panel:#FFF7EF;
+    --orangeDarkPanel:     #D65B0A;
+    --orangeDarkestPanel:  #B34703;
 
     --black: #000;
     --blackTrans: rgba(0, 0, 0, 0.6);
@@ -139,8 +173,22 @@ body {
     @apply w-full py-3 px-5 md:py-2 box-border outline-0 border-2 border-[var(--grey66)] text-[var(--themeBlack)] placeholder:text-gray-500 rounded-md focus:border-[var(--greenPanel)];
 }
 
+.btnRedLight {
+    @apply text-[15px] py-3 px-6 bg-red-300 text-[var(--themeBlack)] font-semibold rounded-md cursor-pointer hover:bg-red-200 active:bg-red-200;
+}
 
 
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
 
 .poppins-thin {
     font-family: "Poppins", sans-serif;
