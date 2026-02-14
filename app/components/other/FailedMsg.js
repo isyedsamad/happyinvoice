@@ -5,7 +5,7 @@ const FailedMsg = (props) => {
     const { setIsFailedMsg } = useContext(FnContext);
     return (
         <>
-            <div className="w-[100vw] h-[100vh] bg-[var(--blackTrans)] fixed flex justify-center items-center">
+            <div className="w-[100vw] h-[100vh] z-45 bg-[var(--blackTrans)] fixed flex justify-center items-center">
                 <div className="p-6 rounded-xl bg-[var(--white)] w-[90%] max-w-[320px]">
                     <div className='flex flex-col justify-start items-start'>
                         <p className='text-lg font-bold text-[var(--red)]'>{props.heading}</p>

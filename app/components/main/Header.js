@@ -29,7 +29,7 @@ const Header = (props) => {
               <div>
                 {props.page == "home" ? (
                   <Link href="./">
-                    <p className="text-base font-semibold text-[var(--greenPanel)]">
+                    <p className="text-base font-semibold text-[var(--primaryPanel)]">
                       <i className="fa-solid fa-home mr-4"></i>Home
                     </p>
                   </Link>
@@ -51,7 +51,7 @@ const Header = (props) => {
               <div className="mt-6">
                 {props.page == "features" ? (
                   <Link href="./">
-                    <p className="text-base font-semibold text-[var(--greenPanel)]">
+                    <p className="text-base font-semibold text-[var(--primaryPanel)]">
                       <i className="fa-solid fa-bolt mr-4"></i>Features
                     </p>
                   </Link>
@@ -66,7 +66,7 @@ const Header = (props) => {
               <div className="mt-6">
                 {props.page == "pricing" ? (
                   <Link href="./">
-                    <p className="text-base font-semibold text-[var(--greenPanel)]">
+                    <p className="text-base font-semibold text-[var(--primaryPanel)]">
                       <i className="fa-solid fa-indian-rupee-sign mr-4"></i>
                       Pricing
                     </p>
@@ -82,7 +82,7 @@ const Header = (props) => {
               </div>
             </div>
             <Link href="signin/">
-              <button className="mt-8 ml-8 py-3 px-8 text-white bg-[var(--greenPanel)] active:bg-[var(--greenDarkPanel)] font-semibold rounded-lg cursor-pointer hover:bg-[var(--greenLightPanel)]">
+              <button className="mt-8 ml-8 py-3 px-8 text-white bg-[var(--primaryPanel)] active:bg-[var(--greenDarkPanel)] font-semibold rounded-lg cursor-pointer hover:bg-[var(--greenLightPanel)]">
                 Login
               </button>
             </Link>
@@ -92,7 +92,7 @@ const Header = (props) => {
               </button>
             </Link>
           </div>
-          <div className="w-[1%] bg-[var(--greenPanel)]"></div>
+          <div className="w-[1%] bg-[var(--primaryPanel)]"></div>
           <div
             className="w-[19%]"
             onClick={() => {
@@ -101,19 +101,19 @@ const Header = (props) => {
           ></div>
         </div>
       )}
-      <div className="flex py-2 justify-center items-center bg-[var(--greenPanel)]">
+      <div className="flex py-2 justify-center items-center bg-[var(--primaryPanel)]">
         <p className="text-sm md:text-md font-semibold text-white">
           Smart. Simple. Seamless Invoicing.
         </p>
       </div>
-      <div className="bg-white flex justify-center items-center py-4 lg:px-11 border-b-2 border-[var(--greenPanel)]">
+      <div className="bg-white flex justify-center items-center py-4 lg:px-11 border-b-2 border-[var(--primaryPanel)]">
         <div className="px-6 lg:px-8 flex justify-start items-center flex-1">
           <h1 className="font-bold text-lg">
-            <span className="text-[var(--greenPanel)]">Happy</span>Invoice
+            <span className="text-[var(--primaryPanel)]">Happy</span>Invoice
           </h1>
           <div className="hidden lg:flex flex-1 gap-10 text-[16px] font-medium justify-center items-center">
             {props.page == "home" ? (
-              <p className="cursor-pointer text-[var(--greenPanel)] hover:text-[var(--greenDarkPanel)] py-2">
+              <p className="cursor-pointer text-[var(--primaryPanel)] hover:text-[var(--greenDarkPanel)] py-2">
                 <i className="fa-solid fa-house"></i>
               </p>
             ) : (
@@ -126,7 +126,7 @@ const Header = (props) => {
               Generate Invoice
             </p>
             {props.page == "features" ? (
-              <p className="cursor-pointer text-[var(--greenPanel)] hover:text-[var(--greenDarkPanel)] py-2 flex justify-center items-center">
+              <p className="cursor-pointer text-[var(--primaryPanel)] hover:text-[var(--greenDarkPanel)] py-2 flex justify-center items-center">
                 <i className="fa-solid fa-bolt mr-3 font-sm"></i>
                 Features
               </p>
@@ -137,7 +137,7 @@ const Header = (props) => {
               </p>
             )}
             {props.page == "pricing" ? (
-              <p className="cursor-pointer text-[var(--greenPanel)] hover:text-[var(--greenDarkPanel)] py-2 flex justify-center items-center">
+              <p className="cursor-pointer text-[var(--primaryPanel)] hover:text-[var(--greenDarkPanel)] py-2 flex justify-center items-center">
                 <i className="fa-solid fa-indian-rupee-sign mr-3 font-sm"></i>
                 Pricing
               </p>
@@ -149,7 +149,7 @@ const Header = (props) => {
             )}
           </div>
           <Link href="signin/">
-            <button className="hidden lg:block py-2 px-6 bg-[var(--greenPanel)] text-white font-semibold rounded-md cursor-pointer hover:bg-[var(--greenDarkPanel)]">
+            <button className="hidden lg:block py-2 px-6 bg-[var(--primaryPanel)] text-white font-semibold rounded-md cursor-pointer hover:bg-[var(--greenDarkPanel)]">
               Login
             </button>
           </Link>

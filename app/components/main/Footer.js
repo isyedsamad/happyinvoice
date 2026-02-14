@@ -8,7 +8,7 @@ const Footer = () => {
 
                     {/* Column 1: Logo and Brand Message */}
                     <div>
-                        <h3 className="text-xl font-bold text-white mb-2"><span className="text-[var(--greenPanel)]">Happy</span>Invoice</h3>
+                        <h3 className="text-xl font-bold text-white mb-2"><span className="text-[var(--primaryPanel)]">Happy</span>Invoice</h3>
                         <p className="text-sm text-gray-300">Making invoicing delightful for businesses worldwide.</p>
                     </div>
 

@@ -9,7 +9,7 @@ const MainDiv = () => {
           <div className="flex justify-center flex-col items-center text-left h-[100%] flex-1">
             <h1 className="font-semibold text-2xl md:text-3xl">
               Empower Your Brand with{" "}
-              <span className="text-[var(--greenPanel)]">
+              <span className="text-[var(--primaryPanel)]">
                 Premium Invoicing
               </span>
               .
@@ -19,7 +19,7 @@ const MainDiv = () => {
               <span className="text-black"> the smart way.</span>
             </h3>
             <Link href='signup'>
-              <button className="mt-6 py-3 px-8 bg-[var(--greenPanel)] text-white font-semibold rounded-md cursor-pointer hover:bg-[var(--greenDarkPanel)]">
+              <button className="mt-6 py-3 px-8 bg-[var(--primaryPanel)] text-white font-semibold rounded-md cursor-pointer hover:bg-[var(--greenDarkPanel)]">
                 Start for Free
               </button>
             </Link>

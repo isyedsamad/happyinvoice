@@ -1,0 +1,41 @@
+{
+  "free": {
+    "name": "Free",
+    "price": 0,
+    "invoicesPerMonth": 3,
+    "clients": 5,
+    "products": 5,
+    "features": {
+      "emailInvoice": false,
+      "onlinePayment": false,
+      "support": false,
+      "removeBranding": false
+    }
+  },
+  "essential": {
+    "name": "Essential",
+    "price": 79,
+    "invoicesPerMonth": 10,
+    "clients": 15,
+    "products": 15,
+    "features": {
+      "emailInvoice": true,
+      "onlinePayment": false,
+      "support": true,
+      "removeBranding": true
+    }
+  },
+  "plus": {
+    "name": "Plus",
+    "price": 199,
+    "invoicesPerMonth": -1,
+    "clients": -1,
+    "products": -1,
+    "features": {
+      "emailInvoice": true,
+      "onlinePayment": true,
+      "support": true,
+      "removeBranding": true
+    }
+  }
+}

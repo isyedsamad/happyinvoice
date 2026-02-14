@@ -1,3 +1,4 @@
+'use client'
 import { AuthContext } from '@/context/AuthContext'
 import React, { useContext, useEffect, useState } from 'react'
 
@@ -6,7 +7,7 @@ const UpgradeBar = () => {
     const [isFree, setIsFree] = useState(false);
     useEffect(() => {
         if (isReady && userData) {
-            if (userData.plan == 'Free') {
+            if (userData.planAnalysis.plan == 'free') {
                 setIsFree(true);
             }
         }
@@ -15,11 +16,11 @@ const UpgradeBar = () => {
     return (
         <>
             {isFree ? (
-                <div className='w-full cursor-pointer text-sm bg-[var(--greenLightestPanel)] hover:bg-[var(--greenLightPanel)] px-4 py-2 flex justify-center items-center'>
+                <div className='w-full cursor-pointer text-sm text-[var(--textPrimary)] bg-[var(--cardPanel)] hover:opacity-80 px-4 py-2 flex justify-center items-center'>
                     <p className='font-medium text-center'>Upgrade to <span className='font-semibold'>🚀 Plus Plan </span>and generate unlimited invoices.</p>
                 </div>
             ) : (
-                <div className='w-full cursor-pointer text-sm bg-[var(--greenLightestPanel)] hover:bg-[var(--greenLightPanel)] px-4 py-2 flex justify-center items-center'>
+                <div className='w-full cursor-pointer text-sm text-[var(--textPrimary)] bg-[var(--cardPanel)] hover:opacity-80 px-4 py-2 flex justify-center items-center'>
                     <p className='font-medium text-center'>We are now a family of <span className='font-semibold'>🚀 Plus Plan </span>and generate unlimited invoices.</p>
                 </div>
             )}

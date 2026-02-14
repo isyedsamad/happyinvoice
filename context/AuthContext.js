@@ -29,12 +29,13 @@ export const AuthProvider = ({ children }) => {
     useEffect(() => {
         const unsub = onAuthStateChanged(auth, async user => {
             try {
-                setLoading(true);
                 setCurrentUser(user);
                 if (!user) {
                     setIsReady(true);
+                    setLoading(false);
                     return
                 }
+                setLoading(true);
                 const docRef = doc(db, 'happyuser', user.uid);
                 const snap = await getDoc(docRef);
                 let firebaseData = {};
@@ -43,15 +44,11 @@ export const AuthProvider = ({ children }) => {
                 }
                 setUserData(firebaseData);
                 setIsReady(true);
-                setLoading(false);
             } catch (err) {
-            } finally {
-                setLoading(false);
             }
         })
         return unsub;
     }, [])
-
     const value = {
         currentUser,
         userData,

@@ -3,7 +3,7 @@ import React from "react";
 const BlockTab = () => {
   return (
     <>
-      <div className="bg-[var(--greenPanel)] py-9 px-8 md:px-11">
+      <div className="bg-[var(--primaryPanel)] py-9 px-8 md:px-11">
         <div className="block md:flex justify-center items-center">
           <div className="flex-1">
             <p className="text-lg md:text-2xl font-bold text-white">

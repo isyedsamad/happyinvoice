@@ -1,0 +1,32 @@
+# Settings for Backend (on Cloud Run).
+# See https://firebase.google.com/docs/app-hosting/configure#cloud-run
+runConfig:
+  minInstances: 0
+  # maxInstances: 100
+  # concurrency: 80
+  # cpu: 1
+  # memoryMiB: 512
+# Environment variables and secrets.
+# env:
+# Configure environment variables.
+# See https://firebase.google.com/docs/app-hosting/configure#user-defined-environment
+# - variable: MESSAGE
+#   value: Hello world!
+#   availability:
+#     - BUILD
+#     - RUNTIME
+
+# Grant access to secrets in Cloud Secret Manager.
+# See https://firebase.google.com/docs/app-hosting/configure#secret-parameters
+# - variable: MY_SECRET
+#   secret: mySecretRef
+
+# build:
+#   command: npm run build
+#   env: NEXT_PUBLIC_API_KEY=AIzaSyA3YPXfrHQLN_7N57tdV8WZX7BK36T7NfQ
+#     NEXT_PUBLIC_AUTH_DOMAIN=happyinvoice-e72af.firebaseapp.com
+#     NEXT_PUBLIC_PROJECT_ID=happyinvoice-e72af
+#     NEXT_PUBLIC_STORAGE_BUCKET=happyinvoice-e72af.firebasestorage.app
+#     NEXT_PUBLIC_MESSAGING_SENDER_ID=616190705273
+#     NEXT_PUBLIC_APP_ID=1:616190705273:web:520dbc7c6a6e6d00fc1ea8
+#     NEXT_PUBLIC_MEASUREMENT_ID=G-P07DWDCC0D

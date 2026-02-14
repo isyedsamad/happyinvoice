@@ -6,8 +6,24 @@
 }
 
 :root {
+    /* orange : #f8684c */
+    /* --cardPanel: #f3f3f3; */
+    /* --primaryPanel: #2BB673;
+    --bgPanel: #ffffff;
+    --cardPanel: #ebebeb;
+    --textPrimary: #000000;
+    --textSecondary: #666666;
+    --textTrans: #ffffff; */
+
+    --primaryPanel: #2BB673;
+    --bgPanel: #11141d;
+    --cardPanel: #1d1f2d;
+    --textPrimary: #ffffff;
+    --textSecondary: #999999;
+    --textTrans: #11141d;
+
     --greenTheme: #2BB673;
-    --greenPanel: #2BB673;
+    --primaryPanel: #2BB673;
     --backPanel: #FAFAFA;
     --textPanel: #2E2E2E;
     --greenSuccess: #6EE7B7;
@@ -20,9 +36,9 @@
     --themeBlackTrans: rgba(0, 0, 0, 0.6);
     --themeWhiteTrans: rgba(255, 255, 255, 0.6);
 
-    /* --themeWhite: #000;
+    /* --themeWhite: #121212;
     --themeBlack: #fff;
-    --themeBackground: #000012;
+    --themeBackground: #1e1f23;
     --themeGreyBlue: #00012e;
     --themeGreyBlueDark: #000121;
     --themeBlackTrans: rgba(255, 255, 255, 0.6);
@@ -52,7 +68,7 @@
     --themeGrey88: #888888;
     --themeGrey99: #999999; */
 
-    --greenPanelSet: #2BB673;
+    --primaryPanelSet: #2BB673;
     --greenLightPanelSet: #A7EBC6;
     --greenLightestPanelSet: #D4F7E5;
     --greenLightest2PanelSet: #dff5e9;
@@ -80,9 +96,9 @@
     --purpleDarkPanel:     #6B46C1;
     --purpleDarkestPanel:  #553C9A;
 
-    --orangePanel:         #F97316;
-    --orangeLightPanel:    #FECBA4;
-    --orangeLightestPanel: #FFF3E5;
+    --orangePanel:         #E45011;
+    --orangeLightPanel:    #fad6bc;
+    --orangeLightestPanel: #fdefe8;
     --orangeLightest2Panel:#FFF7EF;
     --orangeDarkPanel:     #D65B0A;
     --orangeDarkestPanel:  #B34703;
@@ -139,8 +155,8 @@ body {
 #loading {
     width: 65px;
     height: 65px;
-    border: 8px solid var(--greycc);
-    border-top: 8px solid var(--greenPanel);
+    border: 8px solid color-mix(in srgb, #666666 30%, transparent);
+    border-top: 8px solid var(--primaryPanel);
     border-radius: 100%;
     display: inline-block;
     animation: 1.5s ease-in 0s infinite both loading;
@@ -154,23 +170,81 @@ body {
         rotate: 360deg;
     }
 }
+  
 
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bgPanel);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--primaryPanel);
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: color-mix(in srgb, var(--primaryPanel) 80%, transparent);
+}
 
 
 .btnGreen {
-    @apply text-[15px] py-3 px-6 bg-[var(--greenPanel)] text-[var(--themeWhite)] font-semibold rounded-md cursor-pointer hover:bg-[var(--greenDarkPanel)] active:bg-[var(--greenDarkPanel)];
+    @apply text-sm py-2 px-5 bg-[var(--primaryPanel)] text-[var(--bgPanel)] font-semibold rounded-md cursor-pointer hover:opacity-80 active:opacity-80;
 }
 
+.btnGreenOutline {
+    @apply px-4 py-2 text-sm font-medium text-[var(--primaryPanel)] 
+           border border-[var(--primaryPanel)] rounded-md 
+           hover:bg-[var(--greenLightestPanel)] 
+           active:bg-[var(--greenLightPanel)] 
+           transition duration-200 ease-in-out;
+  }
+  
 .btnGreenLight {
-    @apply text-[15px] py-3 px-6 bg-[var(--greenLightPanel)] text-[var(--themeBlack)] font-semibold rounded-md cursor-pointer hover:bg-[var(--greenLightestPanel)] active:bg-[var(--greenLightPanel)];
+    @apply text-sm py-3 px-6 bg-[var(--greenLightPanel)] text-[var(--themeBlack)] font-semibold rounded-md cursor-pointer hover:bg-[var(--greenLightestPanel)] active:bg-[var(--greenLightPanel)];
+}
+
+.btnGreenLightOutline {
+    @apply text-sm py-3 px-6 border border-[var(--greenLightestPanel)] bg-[var(--greenLightPanel)] text-[var(--themeBlack)] font-semibold rounded-md cursor-pointer hover:bg-[var(--greenLightestPanel)] active:bg-[var(--greenLightPanel)];
 }
 
 .btnGreenLightest {
-    @apply text-[15px] py-3 px-6 bg-[var(--greenLightestPanel)] text-[var(--themeBlack)] font-semibold rounded-md cursor-pointer hover:bg-[var(--greenLightPanel)] active:bg-[var(--greenLightestPanel)];
+    @apply text-sm py-3 px-6 bg-[var(--primaryPanel)] hover:opacity-80 text-[var(--textTrans)] font-semibold rounded-md cursor-pointer;
+}
+
+.btnGreenLightestOutline {
+    @apply text-sm py-2 px-4 border-2 border-[var(--greenLightPanel)] bg-[var(--greenLightestPanel)] text-[var(--themeBlack)] font-semibold rounded-md cursor-pointer hover:bg-[var(--greenLightPanel)] active:bg-[var(--greenLightestPanel)];
+}
+
+.btnGrayLightest {
+    @apply text-sm py-3 px-6 bg-gray-200 text-[var(--themeBlack)] font-semibold rounded-md cursor-pointer hover:bg-gray-300 active:bg-gray-300;
+}
+
+.btnRedLightest {
+    @apply text-[15px] py-3 px-6 bg-red-100 text-red-800 font-semibold rounded-md cursor-pointer hover:bg-red-200 active:bg-[var(--greenLightestPanel)];
+}
+
+.happylabel {
+    @apply block text-[var(--textSecondary)] text-sm font-medium mb-1;
 }
 
 .happyinput {
-    @apply w-full py-3 px-5 md:py-2 box-border outline-0 border-2 border-[var(--grey66)] text-[var(--themeBlack)] placeholder:text-gray-500 rounded-md focus:border-[var(--greenPanel)];
+    @apply w-full py-2.5 px-4 text-sm box-border outline-0 border-[2px] border-gray-500 text-[var(--textPrimary)] placeholder:text-gray-500 rounded-md focus:border-[var(--primaryPanel)];
+}
+
+.happyselect {
+    @apply pr-10 pl-4 text-right w-full py-2.5 text-sm box-border outline-0 border-[2px] border-gray-500 text-[var(--textPrimary)] placeholder:text-[var(--textSecondary)] rounded-md focus:border-[var(--primaryPanel)];
+}
+
+.happyinput option {
+    background: var(--cardPanel);
+    color: var(--textPrimary);
+}
+
+.happyinputold {
+    @apply w-full py-3 px-5 md:py-2 box-border outline-0 border-2 border-[var(--grey66)] text-[var(--themeBlack)] placeholder:text-gray-500 rounded-md focus:border-[var(--primaryPanel)];
 }
 
 .btnRedLight {
@@ -178,6 +252,116 @@ body {
 }
 
 
+.table-container {
+    background: var(--cardPanel);
+    border-radius: 10px;
+    overflow: hidden;
+    border: 1px solid rgba(0,0,0,0.05);
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.85rem; /* Small but readable */
+}
+
+thead {
+    background: var(--primaryPanel);
+    color: var(--textTrans);
+    /* border-bottom: 2px solid var(--primaryPanel); */
+}
+
+thead th {
+    padding: 10px 15px;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+}
+
+tbody tr {
+    border-bottom: 1px solid rgba(0,0,0,0.1);
+    background: color-mix(in srgb, var(--cardPanel) 10%, transparent);
+    /* transition: background 0.2s ease; */
+}
+
+tbody tr:nth-child(odd) {
+    background: color-mix(in srgb, var(--cardPanel) 40%, transparent);
+}
+
+tbody tr:hover {
+    background: rgba(0,0,0,0.03);
+}
+
+tbody td {
+    padding: 0.9rem 1rem;
+    color: var(--textPrimary);
+    font-size: 0.82rem;
+}
+
+tbody th {
+    padding: 0.7rem 1rem;
+    color: var(--textPrimary);
+    font-size: 0.82rem;
+}
+
+tbody td.secondary {
+    color: var(--textSecondary);
+}
+  
+.filter-tab-btn {
+    padding: 7px 20px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    user-select: none;
+    /* border: 1px solid var(--tab-color); */
+    border: 1px solid color-mix(in srgb, var(--tab-color) 20%, transparent);
+    color: var(--tab-color);
+    background: color-mix(in srgb, var(--tab-color) 15%, transparent);
+    /* transition: background 0.2s ease, color 0.2s ease; */
+}
+  
+.filter-tab-btn:hover {
+    background: color-mix(in srgb, var(--tab-color) 20%, transparent);
+}
+
+.filter-tab {
+    padding: 4px 15px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    user-select: none;
+    /* border: 1px solid var(--tab-color); */
+    border: 1px solid color-mix(in srgb, var(--tab-color) 20%, transparent);
+    color: var(--tab-color);
+    background: color-mix(in srgb, var(--tab-color) 15%, transparent);
+    /* transition: background 0.2s ease, color 0.2s ease; */
+}
+  
+.filter-tab:hover {
+    background: color-mix(in srgb, var(--tab-color) 20%, transparent);
+}
+
+.filter-tab-small {
+    padding: 4px 10px 2.5px 10px;
+    border-radius: 6px;
+    font-size: 10px;
+    font-weight: 500;
+    cursor: pointer;
+    user-select: none;
+    /* border: 1px solid var(--tab-color); */
+    border: 1px solid color-mix(in srgb, var(--tab-color) 20%, transparent);
+    color: var(--tab-color);
+    background: color-mix(in srgb, var(--tab-color) 15%, transparent);
+    /* transition: background 0.2s ease, color 0.2s ease; */
+}
+  
+.filter-tab-small:hover {
+    background: color-mix(in srgb, var(--tab-color) 20%, transparent);
+} 
 
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {

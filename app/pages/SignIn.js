@@ -57,21 +57,21 @@ const SignIn = () => {
                 <div className='flex flex-1 justify-center items-start py-6 bg-[var(--greenLightPanel)]'>
                     <div className='bg-white py-6 px-6 rounded-lg shadow w-[90%] max-w-[400px]'>
                         <div>
-                            <h1 className='text-xl font-bold text-black'><span className='text-[var(--greenPanel)]'>Happy</span>Invoice</h1>
+                            <Link href='/'><h1 className='text-xl font-bold text-black'><span className='text-[var(--primaryPanel)]'>Happy</span>Invoice</h1></Link>
                             <h3 className='text-sm font-medium text-[var(--grey66)] mt-1'>Welcome back! Continue your billing journey.</h3>
                         </div>
                         <div className='mt-5 w-full'>
                             <form onSubmit={(e) => { submitHandler(e) }}>
                                 <p className='text-md font-medium'>Email</p>
-                                <input required type='email' name='mail' value={mail} onChange={(e) => { setMail(e.target.value) }} className='w-full py-3 px-5 md:py-2 box-border outline-0 border-2 border-[var(--grey66)] rounded-md focus:border-[var(--greenPanel)]' placeholder='enter your email' />
+                                <input required type='email' name='mail' value={mail} onChange={(e) => { setMail(e.target.value) }} className='w-full py-3 px-5 md:py-2 box-border outline-0 border-2 border-[var(--grey66)] rounded-md focus:border-[var(--primaryPanel)]' placeholder='enter your email' />
                                 <p className='text-md font-medium mt-4'>Password</p>
-                                <input required type='password' name='password' value={password} onChange={(e) => { setPassword(e.target.value) }} className='w-full py-3 px-5 md:py-2 box-border outline-0 border-2 border-[var(--grey66)] rounded-md focus:border-[var(--greenPanel)]' placeholder='enter your password' />
+                                <input required type='password' name='password' value={password} onChange={(e) => { setPassword(e.target.value) }} className='w-full py-3 px-5 md:py-2 box-border outline-0 border-2 border-[var(--grey66)] rounded-md focus:border-[var(--primaryPanel)]' placeholder='enter your password' />
                                 <p className='text-[12px] text-gray-600 italic font-semibold mt-1'>🔒 Your data is encrypted and never shared.</p>
                                 <button className='btnGreen mt-4'>Login <i className='fa-solid fa-angle-right ml-2'></i></button>
                             </form>
                             <p className='font-semibold text-sm mt-3 text-[var(--grey66)]'>Forget Password?</p>
                             <Link href='signup/'>
-                                <p className='font-semibold text-sm mt-1 text-[var(--grey66)]'>New User? <span className='text-[var(--greenPanel)] font-semibold'>SignUp Now</span></p>
+                                <p className='font-semibold text-sm mt-1 text-[var(--grey66)]'>New User? <span className='text-[var(--primaryPanel)] font-semibold'>SignUp Now</span></p>
                             </Link>
                             <div className='mt-6 py-4 flex justify-center items-center cursor-pointer rounded-lg bg-black text-white hover:bg-gray-800'>
                                 <FcGoogle className='text-xl mr-3' />

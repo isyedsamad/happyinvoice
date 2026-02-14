@@ -1,23 +1,20 @@
 {
-  "hosting": {
-    "source": ".",
+  "apphosting": {
+    "backendId": "happyinvoice",
+    "rootDir": "/",
     "ignore": [
-      "firebase.json",
-      "**/.*",
-      "**/node_modules/**"
+      "node_modules",
+      ".git",
+      "firebase-debug.log",
+      "firebase-debug.*.log",
+      "functions"
     ],
-    "frameworksBackend": {
-      "region": "us-central1"
-    }
+    "alwaysDeployFromSource": true
   },
   "functions": [
     {
       "source": "functions",
-      "codebase": "default"
-    },
-    {
-      "source": "happyinvoice",
-      "codebase": "happyinvoice",
+      "codebase": "default",
       "ignore": [
         "node_modules",
         ".git",

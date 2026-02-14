@@ -4,7 +4,7 @@ const Testimonial = () => {
     return (
         <>
             <section className="bg-white py-9 md:py-11 px-6 text-center">
-                <h2 className="text-xl md:text-2xl font-bold">What Our <span className='text-[var(--greenPanel)]'>Happy</span> Users Say</h2>
+                <h2 className="text-xl md:text-2xl font-bold">What Our <span className='text-[var(--primaryPanel)]'>Happy</span> Users Say</h2>
                 <div className='flex justify-center items-center'>
                     <div className='w-[80px] h-[2px] bg-black rounded-full mt-4 mb-4'></div>
                 </div>
