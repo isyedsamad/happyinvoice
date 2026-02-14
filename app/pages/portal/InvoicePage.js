@@ -982,63 +982,86 @@ const InvoicePage = (props) => {
     }
     const openPDFInNewTab = async () => {
         setLoading(true);
-        const base64Logo = userData.businesslogo != '' ? await convertLoadedLogoToBase64() : '';
-        const base64Sign = signPreview ? await convertLoadedSignToBase64() : '';
-        const pdfData = {
-            invoice: formData,
-            business: businessData,
-            client: clientDataArray,
-            product: productDataArray,
-            currency: currentCurrency,
-            tax: taxData,
-            discount: discountData,
-            partialPayment: partialPayment,
-            summary: {
-                subtotal: productSubtotal,
-                tax: productTax,
-                total: productTotal,
-                discount: discountAmount,
-                balance: productBalanceDue
-            },
-            footerNote: iFooter,
-            isBank: bankDetails,
-            theme: {
-                main: userData.theme == 'green' ? '#2BB673' : userData.theme == 'blue' ? '#2B6CB0' : userData.theme == 'red' ? '#E53E3E' : userData.theme == 'purple' ? '#805AD5' : userData.theme == 'orange' ? '#F97316' : '#2BB673',
-                light: userData.theme == 'green' ? '#A7EBC6' : userData.theme == 'blue' ? '#A3C9F5' : userData.theme == 'red' ? '#FEB2B2' : userData.theme == 'purple' ? '#D6BCFA' : userData.theme == 'orange' ? '#FECBA4' : '#2BB673'
-            },
+        try {
+            const base64Logo = userData.businesslogo != '' ? await convertLoadedLogoToBase64() : '';
+            const base64Sign = signPreview ? await convertLoadedSignToBase64() : '';
+            const pdfData = {
+                invoice: formData,
+                business: businessData,
+                client: clientDataArray,
+                product: productDataArray,
+                currency: currentCurrency,
+                tax: taxData,
+                discount: discountData,
+                partialPayment: partialPayment,
+                summary: {
+                    subtotal: productSubtotal,
+                    tax: productTax,
+                    total: productTotal,
+                    discount: discountAmount,
+                    balance: productBalanceDue
+                },
+                footerNote: iFooter,
+                isBank: bankDetails,
+                theme: {
+                    main: userData.theme == 'green' ? '#2BB673' : userData.theme == 'blue' ? '#2B6CB0' : userData.theme == 'red' ? '#E53E3E' : userData.theme == 'purple' ? '#805AD5' : userData.theme == 'orange' ? '#F97316' : '#2BB673',
+                    light: userData.theme == 'green' ? '#A7EBC6' : userData.theme == 'blue' ? '#A3C9F5' : userData.theme == 'red' ? '#FEB2B2' : userData.theme == 'purple' ? '#D6BCFA' : userData.theme == 'orange' ? '#FECBA4' : '#2BB673'
+                },
+            }
+            const blob = await pdf(<PDFTemplate01 logoBase64={base64Logo} signBase64={base64Sign} pdfData={pdfData} />).toBlob();
+            const blobUrl = URL.createObjectURL(blob);
+            window.open(blobUrl, '_blank');
+            updateRecentActivity(`PDF generated.`);
+            setLoading(false);
+        } catch (error) {
+            console.error("PDF Generation Error:", error);
+            toast.error('Failed to generate PDF. check console for details.');
+            setLoading(false);
         }
-        const blob = await pdf(<PDFTemplate01 logoBase64={base64Logo} signBase64={base64Sign} pdfData={pdfData} />).toBlob();
-        const blobUrl = URL.createObjectURL(blob);
-        window.open(blobUrl, '_blank');
-        updateRecentActivity(`PDF generated.`);
-        setLoading(false);
     };
     const logoRef = useRef();
     const signRef = useRef();
     const convertLoadedLogoToBase64 = () => {
         return new Promise((resolve, reject) => {
-            const img = logoRef.current;
-            if (!img) return '';
-            const canvas = document.createElement('canvas');
-            canvas.width = img.naturalWidth;
-            canvas.height = img.naturalHeight;
-            const ctx = canvas.getContext('2d');
-            ctx.drawImage(img, 0, 0);
-            const dataURL = canvas.toDataURL('image/png');
-            resolve(dataURL);
+            try {
+                const img = logoRef.current;
+                if (!img) {
+                    resolve('');
+                    return;
+                }
+                const canvas = document.createElement('canvas');
+                canvas.width = img.naturalWidth;
+                canvas.height = img.naturalHeight;
+                const ctx = canvas.getContext('2d');
+                ctx.drawImage(img, 0, 0);
+                const dataURL = canvas.toDataURL('image/png');
+                resolve(dataURL);
+            } catch (error) {
+                console.error("Logo conversion error (CORS?):", error);
+                // Return empty string if conversion fails (e.g. CORS) so PDF can still generate without logo
+                resolve('');
+            }
         });
     };
     const convertLoadedSignToBase64 = () => {
         return new Promise((resolve, reject) => {
-            const img = signRef.current;
-            if (!img) return '';
-            const canvas = document.createElement('canvas');
-            canvas.width = img.naturalWidth;
-            canvas.height = img.naturalHeight;
-            const ctx = canvas.getContext('2d');
-            ctx.drawImage(img, 0, 0);
-            const dataURL = canvas.toDataURL('image/png');
-            resolve(dataURL);
+            try {
+                const img = signRef.current;
+                if (!img) {
+                    resolve('');
+                    return;
+                }
+                const canvas = document.createElement('canvas');
+                canvas.width = img.naturalWidth;
+                canvas.height = img.naturalHeight;
+                const ctx = canvas.getContext('2d');
+                ctx.drawImage(img, 0, 0);
+                const dataURL = canvas.toDataURL('image/png');
+                resolve(dataURL);
+            } catch (error) {
+                console.error("Signature conversion error (CORS?):", error);
+                resolve('');
+            }
         });
     };
     const sendMailToClient = async () => {

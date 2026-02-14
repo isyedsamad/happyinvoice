@@ -1,263 +1,419 @@
 import React from 'react';
-import { Page, Text, View, Document, Image } from '@react-pdf/renderer';
-import { Font } from '@react-pdf/renderer';
+import { Page, Text, View, Document, Image, Font } from '@react-pdf/renderer';
 
 Font.register({
     family: 'Poppins',
-    src: '/fonts/Poppins-Regular.ttf',
-    fontWeight: 'normal',
+    fonts: [
+        { src: '/fonts/Poppins-Regular.ttf' },
+        { src: '/fonts/Poppins-Medium.ttf', fontWeight: 500 },
+        { src: '/fonts/Poppins-SemiBold.ttf', fontWeight: 600 },
+        { src: '/fonts/Poppins-Bold.ttf', fontWeight: 700 },
+    ]
 });
 
-Font.register({
-    family: 'Poppins',
-    src: '/fonts/Poppins-Medium.ttf',
-    fontWeight: 500,
-});
-
-Font.register({
-    family: 'Poppins',
-    src: '/fonts/Poppins-SemiBold.ttf',
-    fontWeight: 600,
-});
-
-Font.register({
-    family: 'Poppins',
-    src: '/fonts/Poppins-Bold.ttf',
-    fontWeight: 700,
-});
 export default function PDFTemplate01(props) {
-    const currencyShow = {
-        INR: '₹',
-        USD: '$',
-        EUR: '€',
-        GBP: '£',
-        JPY: '¥'
-    }
-    const design = {
-        colors: {
-            greenPanel: props.pdfData.theme.main,
-            greenLightPanel: props.pdfData.theme.light,
-            gray: '#4B5563',
-            black: '#000000',
-            white: '#ffffff',
+    const { pdfData, logoBase64, signBase64 } = props;
+    const { theme, business, client, invoice, summary, currency, tax, discount, partialPayment, footerNote, isBank } = pdfData;
+
+    const currencySymbol = {
+        INR: '₹', USD: '$', EUR: '€', GBP: '£', JPY: '¥'
+    }[currency] || currency;
+
+    const styles = {
+        page: {
+            fontFamily: 'Poppins',
+            fontSize: 9,
+            padding: 30, // Reduced padding for compact feel
+            color: '#333',
+            lineHeight: 1.4,
         },
-        text: {
-            text8: 8,
-            text9: 9,
-            xs: 9,
-            text10: 10,
-            text11: 11,
-            text12: 12,
-            normal: 13,
-            medium: 14,
-            text15: 15,
-            large: 16,
-            xlarge: 18,
+        // Header Section
+        header: {
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            alignItems: 'flex-start',
+            marginBottom: 25,
+            paddingBottom: 20,
+            borderBottomWidth: 1,
+            borderBottomColor: '#eee',
         },
-        spacing: {
-            xs: 4,
-            sm: 6,
-            md: 8,
-            lg: 12,
-            xl: 16,
-            xxl: 24,
-            xxxl: 32,
+        brandSection: {
+            flexDirection: 'row',
+            alignItems: 'center',
+            width: '60%',
         },
-        border: {
-            light: 1,
+        logo: {
+            height: 50,
+            width: 50,
+            objectFit: 'contain',
+            borderRadius: 4,
+            marginRight: 15,
         },
-        fontWeight: {
-            normal: 'normal',
-            medium: 500,
-            semibold: 600,
-            bold: 700,
+        brandDetails: {
+            justifyContent: 'center',
+        },
+        businessName: {
+            fontSize: 18,
+            fontWeight: 700,
+            color: theme.main,
+            textTransform: 'uppercase',
+            marginBottom: 3,
+            lineHeight: 1.2,
+        },
+        businessMeta: {
+            fontSize: 9,
+            color: '#666',
+        },
+        invoiceMetaSection: {
+            width: '35%',
+            alignItems: 'flex-end',
+        },
+        invoiceTitle: {
+            fontSize: 22,
+            fontWeight: 800,
+            color: '#222', // Dark grey for improved readability
+            letterSpacing: 1,
+            marginBottom: 8,
+            textTransform: 'uppercase',
+        },
+        metaRow: {
+            flexDirection: 'row',
+            marginBottom: 4,
+            alignItems: 'center',
+        },
+        metaLabel: {
+            fontSize: 9,
+            color: '#888',
+            fontWeight: 500,
+            marginRight: 8,
+            textTransform: 'uppercase',
+        },
+        metaValue: {
+            fontSize: 10,
+            fontWeight: 700,
+            color: '#222',
+        },
+
+        // Address Section - Clean & Modern
+        addressSection: {
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            marginBottom: 30,
+        },
+        addressBlock: {
+            width: '45%',
+        },
+        addressLabel: {
+            fontSize: 8,
+            fontWeight: 700,
+            color: '#999',
+            marginBottom: 6,
+            textTransform: 'uppercase',
+            letterSpacing: 0.5,
+            alignSelf: 'flex-start',
+        },
+        clientName: {
+            fontSize: 11,
+            fontWeight: 700,
+            marginBottom: 4,
+            color: theme.main, // Use theme color only for name
+        },
+        addressText: {
+            fontSize: 9,
+            color: '#555',
+            lineHeight: 1.4,
+            marginBottom: 1,
+        },
+
+        // Table - Minimalist
+        table: {
+            width: '100%',
+            marginBottom: 20,
+        },
+        tableHeader: {
+            flexDirection: 'row',
+            backgroundColor: '#fff', // White background
+            borderBottomWidth: 2, // Stronger bottom border
+            borderBottomColor: theme.main, // Colored accent
+            paddingVertical: 8,
+            paddingHorizontal: 5,
+            alignItems: 'center',
+            marginBottom: 5,
+        },
+        th: {
+            fontSize: 9,
+            fontWeight: 700,
+            color: theme.main, // Colored header text for contrast on white
+            textTransform: 'uppercase',
+        },
+        tableRow: {
+            flexDirection: 'row',
+            borderBottomWidth: 1,
+            borderBottomColor: '#f5f5f5',
+            paddingVertical: 10, // More vertical breathing room
+            paddingHorizontal: 5,
+            alignItems: 'center',
+        },
+        td: {
+            fontSize: 9,
+            color: '#444',
+        },
+        // Columns
+        colDesc: { flex: 1, paddingLeft: 5 },
+        colPrice: { width: '15%', textAlign: 'right' },
+        colQty: { width: '10%', textAlign: 'center' },
+        colTax: { width: '12%', textAlign: 'right' },
+        colTotal: { width: '18%', textAlign: 'right', paddingRight: 5 },
+
+        // Footer Section (Totals + Notes)
+        footerSection: {
+            flexDirection: 'row',
+            marginTop: 15,
+        },
+        leftFooter: {
+            flex: 1,
+            paddingRight: 30,
+        },
+        rightFooter: {
+            width: '40%',
+            paddingLeft: 10,
+        },
+
+        // Totals - tiered structure
+        totalRow: {
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            paddingVertical: 5,
+        },
+        totalLabel: {
+            fontSize: 9,
+            color: '#666',
+            fontWeight: 500,
+        },
+        totalValue: {
+            fontSize: 10,
+            fontWeight: 600,
+            color: '#333',
+        },
+        grandTotalRow: {
+            flexDirection: 'row',
+            justifyContent: 'space-between',
+            paddingVertical: 10,
+            marginTop: 10,
+            borderTopWidth: 2, // Strong top border
+            borderTopColor: '#eee',
+            // Removed background color to avoid contrast issues
+        },
+        grandTotalLabel: {
+            fontSize: 11,
+            fontWeight: 800,
+            color: '#222',
+            textTransform: 'uppercase',
+        },
+        grandTotalValue: {
+            fontSize: 16,
+            fontWeight: 800,
+            color: theme.main, // Theme color for just the value
+        },
+
+        // Notes & Bank
+        sectionTitle: {
+            fontSize: 9,
+            fontWeight: 700,
+            color: '#555',
+            marginBottom: 4,
+            marginTop: 10,
+            textTransform: 'uppercase',
+        },
+        noteText: {
+            fontSize: 8,
+            color: '#666',
+            lineHeight: 1.5,
+        },
+        bankRow: {
+            flexDirection: 'row',
+            marginBottom: 3,
+        },
+        bankLabel: {
+            fontSize: 8,
+            color: '#888',
+            width: 50,
+            fontWeight: 600,
+        },
+        bankValue: {
+            fontSize: 9,
+            color: '#333',
+            fontWeight: 500,
+        },
+
+        // Signature
+        signatureBox: {
+            marginTop: 30,
+            alignItems: 'flex-start',
+        },
+        signatureImage: {
+            height: 40,
+            marginBottom: 5,
         },
     };
+
     return (
         <Document>
-            <Page size="A4" style={{ backgroundColor: design.colors.white, color: design.colors.black }}>
-                <View style={{ height: design.spacing.md, backgroundColor: design.colors.greenPanel }} />
-                <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: design.spacing.xxxl, paddingTop: 10 }}>
-                    {props.logoBase64 != '' && (
-                        <Image
-                            src={props.logoBase64}
-                            style={{ height: 35, borderRadius: 8 }}
-                        />
-                    )}
-                    <View style={{ flexDirection: 'column', alignItems: 'flex-end' }}>
-                        <Text style={{ fontFamily: 'Poppins', fontSize: design.text.large, fontWeight: design.fontWeight.semibold, color: design.colors.greenPanel }}>{props.pdfData.business.name}</Text>
-                        {props.pdfData.business.mail != '' && (
-                            <Text style={{ fontFamily: 'Poppins', fontSize: design.text.text9, fontWeight: design.fontWeight.medium, marginTop: 1.5, color: design.colors.gray }}>{props.pdfData.business.mail}</Text>
-                        )}
-                        {props.pdfData.business.phone != '' && (
-                            <Text style={{ fontFamily: 'Poppins', fontSize: design.text.text9, fontWeight: design.fontWeight.medium, marginTop: 2, color: design.colors.gray }}>{props.pdfData.business.phone}</Text>
-                        )}
-                        {props.pdfData.business.address != '' && (
-                            <Text style={{ fontFamily: 'Poppins', fontSize: design.text.text9, fontWeight: design.fontWeight.medium, marginTop: 1, color: design.colors.gray }}>{props.pdfData.business.address}</Text>
-                        )}
-                    </View>
-                </View>
-                <View style={{ height: 1, backgroundColor: design.colors.greenLightPanel, marginTop: 8, marginBottom: 7 }} />
-                <View style={{ flexDirection: 'row', justifyContent: 'space-between', paddingHorizontal: design.spacing.xxxl }}>
-                    {[
-                        { label: 'INVOICE NO.', value: props.pdfData.invoice.invoiceNo },
-                        { label: 'INVOICE DATE', value: props.pdfData.invoice.invoiceDate },
-                        { label: 'DUE DATE', value: props.pdfData.invoice.dueDate != '' ? props.pdfData.invoice.dueDate : '-' },
-                        { label: 'BALANCE DUE', value: `${currencyShow[props.pdfData.currency]} ${props.pdfData.summary.balance}` },
-                    ].map((item, i) => (
-                        <View key={i}>
-                            <Text style={{ fontFamily: 'Poppins', fontSize: design.text.xs, color: design.colors.gray, fontWeight: design.fontWeight.medium }}>{item.label}</Text>
-                            <Text style={{ fontFamily: 'Poppins', fontSize: design.text.text11, marginTop: 1, color: design.colors.greenPanel, fontWeight: design.fontWeight.semibold }}>{item.value}</Text>
+            <Page size="A4" style={styles.page}>
+                {/* Header */}
+                <View style={styles.header}>
+                    <View style={styles.brandSection}>
+                        {logoBase64 && <Image src={logoBase64} style={styles.logo} />}
+                        <View style={styles.brandDetails}>
+                            <Text style={styles.businessName}>{business.name}</Text>
+                            {business.address && <Text style={styles.businessMeta}>{business.address}</Text>}
+                            {(business.mail || business.phone) && (
+                                <Text style={styles.businessMeta}>
+                                    {[business.mail, business.phone].filter(Boolean).join(' • ')}
+                                </Text>
+                            )}
                         </View>
-                    ))}
-                </View>
-                <View style={{ height: 1, backgroundColor: design.colors.greenLightPanel, marginTop: 7, marginBottom: 10 }} />
-                <View style={{ paddingHorizontal: design.spacing.xxxl, paddingVertical: 2 }}>
-                    <Text style={{ fontFamily: 'Poppins', fontSize: design.text.text10, fontWeight: design.fontWeight.semibold, color: design.colors.black }}>BILL TO</Text>
-                    <Text style={{ fontFamily: 'Poppins', fontSize: design.text.large, fontWeight: design.fontWeight.semibold, color: design.colors.greenPanel, marginTop: 2 }}>{props.pdfData.client.name}</Text>
-                    {props.pdfData.client.mail != '' && (
-                        <Text style={{ fontFamily: 'Poppins', fontSize: design.text.text9, fontWeight: design.fontWeight.medium, marginTop: 1.5, color: design.colors.gray }}>{props.pdfData.client.mail}</Text>
-                    )}
-                    {props.pdfData.client.phone != '' && (
-                        <Text style={{ fontFamily: 'Poppins', fontSize: design.text.text9, fontWeight: design.fontWeight.medium, marginTop: 2, color: design.colors.gray }}>{props.pdfData.client.phone}</Text>
-                    )}
-                    {props.pdfData.client.address != '' && (
-                        <Text style={{ fontFamily: 'Poppins', fontSize: design.text.text9, fontWeight: design.fontWeight.medium, marginTop: 1, color: design.colors.gray }}>{props.pdfData.client.address}</Text>
-                    )}
-                </View>
-                <View style={{ height: 1, backgroundColor: design.colors.greenLightPanel, marginTop: 10 }} />
-                {/* Table */}
-                <View style={{ paddingHorizontal: 0 }}>
-                    {/* <View style={{ flexDirection: 'row', borderBottomWidth: 1, borderBottomColor: design.colors.greenLightPanel, paddingHorizontal: design.spacing.xxxl, paddingVertical: 8 }}>
-                        {["DESCRIPTION", "PRICE", "TAX", "QTY", "AMOUNT"].map((header, i) => (
-                            <Text key={i} style={{ fontFamily: 'Poppins', fontSize: design.text.text11, flex: 1, color: design.colors.gray, textAlign: i === 0 ? 'left' : 'right', maxWidth: i === 0 ? 100 : 25, fontWeight: design.fontWeight.semibold }}>{header}</Text>
-                        ))}
-                    </View> */}
-                    <View style={{ flexDirection: 'row', borderBottomWidth: 1, borderBottomColor: design.colors.greenLightPanel, paddingHorizontal: design.spacing.xxxl, paddingVertical: 8 }}>
-                        <Text style={{ fontFamily: 'Poppins', fontSize: design.text.text11, flex: 1, color: design.colors.gray, textAlign: 'left', fontWeight: design.fontWeight.semibold }}>DESCRIPTION</Text>
-                        <Text style={{ fontFamily: 'Poppins', fontSize: design.text.text11, width: 80, color: design.colors.gray, textAlign: 'right', fontWeight: design.fontWeight.semibold }}>PRICE</Text>
-                        <Text style={{ fontFamily: 'Poppins', fontSize: design.text.text11, width: 60, color: design.colors.gray, textAlign: 'right', fontWeight: design.fontWeight.semibold }}>TAX</Text>
-                        <Text style={{ fontFamily: 'Poppins', fontSize: design.text.text11, width: 50, color: design.colors.gray, textAlign: 'right', fontWeight: design.fontWeight.semibold }}>QTY</Text>
-                        <Text style={{ fontFamily: 'Poppins', fontSize: design.text.text11, width: 90, color: design.colors.gray, textAlign: 'right', fontWeight: design.fontWeight.semibold }}>AMOUNT</Text>
                     </View>
-                    {props.pdfData.product.map(child => (
-                        <View key={child.id} style={{ flexDirection: 'row', borderBottomWidth: 1, borderBottomColor: '#E5E7EB', paddingHorizontal: design.spacing.xxxl, paddingVertical: 4 }}>
-                            <View style={{ display: 'flex', flexDirection: 'column', flex: 1 }}>
-                                <Text style={{ fontFamily: 'Poppins', fontSize: design.text.text11, fontWeight: design.fontWeight.semibold }}>{child.name}</Text>
-                                <Text style={{ fontFamily: 'Poppins', color: design.colors.gray, fontSize: design.text.text8, fontWeight: design.fontWeight.medium }}>{child.description}</Text>
+                    <View style={styles.invoiceMetaSection}>
+                        <Text style={styles.invoiceTitle}>INVOICE</Text>
+                        <View style={styles.metaRow}>
+                            <Text style={styles.metaLabel}>Invoice #</Text>
+                            <Text style={styles.metaValue}>{invoice.invoiceNo}</Text>
+                        </View>
+                        <View style={styles.metaRow}>
+                            <Text style={styles.metaLabel}>Date</Text>
+                            <Text style={styles.metaValue}>{invoice.invoiceDate}</Text>
+                        </View>
+                        {invoice.dueDate && (
+                            <View style={styles.metaRow}>
+                                <Text style={styles.metaLabel}>Due</Text>
+                                <Text style={styles.metaValue}>{invoice.dueDate}</Text>
                             </View>
-                            <Text style={{ fontFamily: 'Poppins', fontSize: design.text.text11, textAlign: 'right', width: 80 }}>{currencyShow[props.pdfData.currency]} {child.price}</Text>
-                            <Text style={{ fontFamily: 'Poppins', fontSize: design.text.text11, textAlign: 'right', width: 60 }}>{props.pdfData.tax.taxType == 'Per Item' ? child.tax != "" ? child.tax + ' %' : "-" : "-"}</Text>
-                            <Text style={{ fontFamily: 'Poppins', fontSize: design.text.text11, textAlign: 'right', width: 50 }}>{child.qty >= 10 ? child.qty : '0' + child.qty}</Text>
-                            <Text style={{ fontFamily: 'Poppins', fontSize: design.text.text11, fontWeight: design.fontWeight.semibold, textAlign: 'right', width: 90 }}>
-                                {currencyShow[props.pdfData.currency]} {props.pdfData.tax.taxType == 'Per Item' ? child.tax != '' ?
-                                    ((child.qty * child.price) + (((child.qty * child.price) * child.tax) / 100)).toFixed(2)
-                                    :
-                                    (child.qty * child.price).toFixed(2)
-                                    :
-                                    (child.qty * child.price).toFixed(2)
-                                }</Text>
+                        )}
+                        <View style={[styles.metaRow, { marginTop: 4, paddingTop: 4, borderTopWidth: 1, borderTopColor: '#f0f0f0' }]}>
+                            <Text style={[styles.metaLabel, { color: theme.main }]}>Amount Due</Text>
+                            <Text style={[styles.metaValue, { color: theme.main }]}>{currencySymbol}{Number(summary.balance).toFixed(2)}</Text>
                         </View>
-                    ))}
+                    </View>
                 </View>
 
-                {/* Totals Section */}
-                <View style={{ flexDirection: 'row', alignItems: 'flex-end', marginTop: 8 }}>
-                    <View style={{ flex: 1, paddingLeft: design.spacing.xxxl }}>
-                        {props.pdfData.isBank == 'Yes' && (
-                            <>
-                                <Text style={{ fontFamily: 'Poppins', fontSize: design.text.normal, fontWeight: design.fontWeight.semibold, color: design.colors.greenPanel }}>Payment Details</Text>
-                                <Text style={{ fontFamily: 'Poppins', fontSize: design.text.text12, color: design.colors.gray, marginTop: 5, fontWeight: design.fontWeight.medium }}>A/C : 999999999999</Text>
-                                <Text style={{ fontFamily: 'Poppins', fontSize: design.text.text12, color: design.colors.gray, marginTop: 2, fontWeight: design.fontWeight.medium }}>IFSC : SBIN0001238</Text>
-                                <Text style={{ fontFamily: 'Poppins', fontSize: design.text.text12, color: design.colors.gray, marginTop: 2, fontWeight: design.fontWeight.medium }}>Name : Sanjay Singh</Text>
-                            </>
-                        )}
+                {/* Addresses */}
+                <View style={styles.addressSection}>
+                    <View style={styles.addressBlock}>
+                        <Text style={styles.addressLabel}>Bill To</Text>
+                        <Text style={styles.clientName}>{client.name}</Text>
+                        {client.address && <Text style={styles.addressText}>{client.address}</Text>}
+                        {client.phone && <Text style={styles.addressText}>{client.phone}</Text>}
+                        {client.mail && <Text style={styles.addressText}>{client.mail}</Text>}
                     </View>
-                    <View style={{ flex: 1 }}>
-                        {/* {["Subtotal", "Tax", "Total", "Discount", "Balance Due"].map((label, i) => (
-                            <View key={i} style={{ flexDirection: 'row', justifyContent: 'space-between', marginBottom: 4 }}>
-                                <Text style={{ fontFamily: 'Poppins', fontSize: design.text.normal, color: design.colors.gray }}>{label} :</Text>
-                                <Text style={{ fontFamily: 'Poppins', fontSize: i === 4 ? design.text.large : design.text.normal, fontWeight: i === 4 ? design.fontWeight.bold : design.fontWeight.semibold }}>
-                                    ₹ 1299.00
+                    {/* Can put 'Ship To' or 'Payment Info' here if needed, or leave blank/balance it */}
+                    {isBank === 'Yes' && (
+                        <View style={styles.addressBlock}>
+                            <Text style={styles.addressLabel}>Bank Details</Text>
+                            <View style={styles.bankRow}><Text style={styles.bankLabel}>Bank:</Text><Text style={styles.bankValue}>State Bank of India</Text></View>
+                            <View style={styles.bankRow}><Text style={styles.bankLabel}>A/C:</Text><Text style={styles.bankValue}>999999999999</Text></View>
+                            <View style={styles.bankRow}><Text style={styles.bankLabel}>IFSC:</Text><Text style={styles.bankValue}>SBIN0001238</Text></View>
+                            <View style={styles.bankRow}><Text style={styles.bankLabel}>Name:</Text><Text style={styles.bankValue}>Sanjay Singh</Text></View>
+                        </View>
+                    )}
+                </View>
+
+                {/* Compact Table */}
+                <View style={styles.table}>
+                    <View style={styles.tableHeader}>
+                        <Text style={[styles.th, styles.colDesc]}>Item Description</Text>
+                        <Text style={[styles.th, styles.colPrice]}>Price</Text>
+                        <Text style={[styles.th, styles.colQty]}>Qty</Text>
+                        <Text style={[styles.th, styles.colTax]}>Tax</Text>
+                        <Text style={[styles.th, styles.colTotal]}>Total</Text>
+                    </View>
+
+                    {pdfData.product.map((item, index) => {
+                        const itemTotal = tax.taxType == 'Per Item' && item.tax
+                            ? (item.qty * item.price) + (((item.qty * item.price) * item.tax) / 100)
+                            : (item.qty * item.price);
+
+                        return (
+                            <View key={item.id} style={styles.tableRow}>
+                                <View style={styles.colDesc}>
+                                    <Text style={[styles.td, { fontWeight: 600, fontSize: 10, marginBottom: 2 }]}>{item.name}</Text>
+                                    {item.description && <Text style={{ fontSize: 8, color: '#777' }}>{item.description}</Text>}
+                                </View>
+                                <Text style={[styles.td, styles.colPrice]}>{currencySymbol}{Number(item.price).toFixed(2)}</Text>
+                                <Text style={[styles.td, styles.colQty]}>{item.qty}</Text>
+                                <Text style={[styles.td, styles.colTax]}>
+                                    {tax.taxType === 'Per Item' && item.tax ? `${item.tax}%` : '-'}
+                                </Text>
+                                <Text style={[styles.td, styles.colTotal, { fontWeight: 600 }]}>
+                                    {currencySymbol}{Number(itemTotal).toFixed(2)}
                                 </Text>
                             </View>
-                        ))} */}
-                        <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                            <Text style={{ fontFamily: 'Poppins', fontSize: design.text.text11, color: design.colors.gray, fontWeight: design.fontWeight.medium, paddingLeft: 4 }}>Subtotal :</Text>
-                            <Text style={{ fontFamily: 'Poppins', fontSize: design.text.text11, fontWeight: design.fontWeight.semibold, paddingRight: design.spacing.xxxl }}>
-                                {currencyShow[props.pdfData.currency]} {Number(props.pdfData.summary.subtotal).toFixed(2)}
-                            </Text>
-                        </View>
-                        <View style={{ height: 1, backgroundColor: '#E5E7EB', marginTop: 4, marginBottom: 4 }} />
-                        <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                            <Text style={{ fontFamily: 'Poppins', fontSize: design.text.text11, color: design.colors.gray, fontWeight: design.fontWeight.medium, paddingLeft: 4 }}>
-                                {props.pdfData.tax.taxType == 'On Total' || props.pdfData.tax.taxType == 'Deducted' ? (
-                                    props.pdfData.tax.taxLabel + ' (' + props.pdfData.tax.taxValue + '%)'
-                                ) : (
-                                    'Tax'
-                                )} :
-                            </Text>
-                            <Text style={{ fontFamily: 'Poppins', fontSize: design.text.text11, fontWeight: design.fontWeight.semibold, paddingRight: design.spacing.xxxl }}>
-                                {currencyShow[props.pdfData.currency]} {Number(props.pdfData.summary.tax).toFixed(2)}
-                            </Text>
-                        </View>
-                        <View style={{ height: 1, backgroundColor: '#E5E7EB', marginTop: 4, marginBottom: 4 }} />
-                        <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                            <Text style={{ fontFamily: 'Poppins', fontSize: design.text.text11, color: design.colors.gray, fontWeight: design.fontWeight.medium, paddingLeft: 4 }}>Total :</Text>
-                            <Text style={{ fontFamily: 'Poppins', fontSize: design.text.text11, fontWeight: design.fontWeight.semibold, paddingRight: design.spacing.xxxl }}>
-                                {currencyShow[props.pdfData.currency]} {Number(props.pdfData.summary.total).toFixed(2)}
-                            </Text>
-                        </View>
-                        {props.pdfData.discount.discountType != 'None' && (
+                        );
+                    })}
+                </View>
+
+                {/* Footer Section */}
+                <View style={styles.footerSection}>
+                    {/* Left Side: Notes & Signature */}
+                    <View style={styles.leftFooter}>
+                        {footerNote && (
                             <>
-                                <View style={{ height: 1, backgroundColor: '#E5E7EB', marginTop: 4, marginBottom: 4 }} />
-                                <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                                    <Text style={{ fontFamily: 'Poppins', fontSize: design.text.text11, color: design.colors.gray, fontWeight: design.fontWeight.medium, paddingLeft: 4 }}>Discount {props.pdfData.discount.discountType == 'Percent' && '(' + props.pdfData.discount.discountValue + '%)'} :</Text>
-                                    <Text style={{ fontFamily: 'Poppins', fontSize: design.text.text11, fontWeight: design.fontWeight.semibold, paddingRight: design.spacing.xxxl }}>
-                                        {currencyShow[props.pdfData.currency]} {props.pdfData.discount.discountType == 'Percent' ? Number(props.pdfData.summary.discount).toFixed(2) : Number(props.pdfData.discount.discountValue).toFixed(2)}
-                                    </Text>
+                                <Text style={styles.sectionTitle}>Terms & Notes</Text>
+                                <Text style={styles.noteText}>{footerNote}</Text>
+                            </>
+                        )}
+                        <View style={styles.signatureBox}>
+                            {signBase64 ? <Image src={signBase64} style={styles.signatureImage} /> : null}
+                            <Text style={{ fontSize: 9, color: theme.main, fontWeight: 700 }}>Authorized Signature</Text>
+                        </View>
+                    </View>
+
+                    {/* Right Side: Totals */}
+                    <View style={styles.rightFooter}>
+                        <View style={styles.totalRow}>
+                            <Text style={styles.totalLabel}>Subtotal</Text>
+                            <Text style={styles.totalValue}>{currencySymbol}{Number(summary.subtotal).toFixed(2)}</Text>
+                        </View>
+                        <View style={styles.totalRow}>
+                            <Text style={styles.totalLabel}>
+                                {(['On Total', 'Deducted'].includes(tax.taxType)) ? `${tax.taxLabel} (${tax.taxValue}%)` : 'Tax'}
+                            </Text>
+                            <Text style={styles.totalValue}>{currencySymbol}{Number(summary.tax).toFixed(2)}</Text>
+                        </View>
+                        {discount.discountType !== 'None' && (
+                            <View style={styles.totalRow}>
+                                <Text style={styles.totalLabel}>Discount</Text>
+                                <Text style={[styles.totalValue, { color: '#e53e3e' }]}>
+                                    -{currencySymbol}{discount.discountType === 'Percent' ? Number(summary.discount).toFixed(2) : Number(discount.discountValue).toFixed(2)}
+                                </Text>
+                            </View>
+                        )}
+
+                        <View style={styles.grandTotalRow}>
+                            <Text style={styles.grandTotalLabel}>Total Amount</Text>
+                            <Text style={styles.grandTotalValue}>{currencySymbol}{Number(summary.total).toFixed(2)}</Text>
+                        </View>
+
+                        {partialPayment.isPartial === 'Yes' && (
+                            <>
+                                <View style={[styles.totalRow, { marginTop: 5, borderBottomWidth: 0 }]}>
+                                    <Text style={styles.totalLabel}>Paid</Text>
+                                    <Text style={styles.totalValue}>{currencySymbol}{Number(partialPayment.amount).toFixed(2)}</Text>
+                                </View>
+                                <View style={[styles.totalRow, { borderTopWidth: 1, borderTopColor: '#eee', paddingTop: 5, borderBottomWidth: 0 }]}>
+                                    <Text style={[styles.totalLabel, { color: theme.main, fontWeight: 700 }]}>Balance Due</Text>
+                                    <Text style={[styles.totalValue, { color: theme.main, fontWeight: 700 }]}>{currencySymbol}{Number(summary.balance).toFixed(2)}</Text>
                                 </View>
                             </>
                         )}
-                        {props.pdfData.partialPayment.isPartial == 'Yes' && (
-                            <>
-                                <View style={{ height: 1, backgroundColor: '#E5E7EB', marginTop: 4, marginBottom: 4 }} />
-                                <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                                    <Text style={{ fontFamily: 'Poppins', fontSize: design.text.text11, color: design.colors.gray, fontWeight: design.fontWeight.medium, paddingLeft: 4 }}>Previous Payment :</Text>
-                                    <Text style={{ fontFamily: 'Poppins', fontSize: design.text.text11, fontWeight: design.fontWeight.semibold, paddingRight: design.spacing.xxxl }}>
-                                        {currencyShow[props.pdfData.currency]} {Number(props.pdfData.partialPayment.amount).toFixed(2)}
-                                    </Text>
-                                </View>
-                            </>
-                        )}
-                        <View style={{ height: 1, backgroundColor: '#E5E7EB', marginTop: 4, marginBottom: 6 }} />
-                        <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                            <Text style={{ fontFamily: 'Poppins', fontSize: design.text.medium, color: design.colors.black, fontWeight: design.fontWeight.semibold, paddingLeft: 4 }}>Balance Due :</Text>
-                            <Text style={{ fontFamily: 'Poppins', fontSize: design.text.large, fontWeight: design.fontWeight.semibold, paddingRight: design.spacing.xxxl }}>
-                                {currencyShow[props.pdfData.currency]} {Number(props.pdfData.summary.balance).toFixed(2)}
-                            </Text>
-                        </View>
                     </View>
                 </View>
 
-                {/* Footer Signature */}
-                <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-end', paddingHorizontal: design.spacing.xxxl, marginTop: 30 }}>
-                    <View>
-                        <Text style={{ fontFamily: 'Poppins', fontSize: design.text.text12, fontWeight: design.fontWeight.semibold, color: design.colors.greenPanel }}>NOTE</Text>
-                        <Text style={{ fontFamily: 'Poppins', fontSize: design.text.text11, color: design.colors.gray }}>{props.pdfData.footerNote}</Text>
-                    </View>
-                    <View style={{ alignItems: 'center' }}>
-                        {props.signBase64 != '' && (
-                            <>
-                                <Image
-                                    src={props.signBase64}
-                                    style={{ height: 55 }}
-                                />
-                                <Text style={{ fontFamily: 'Poppins', fontSize: design.text.text11, color: design.colors.gray }}>Authorised Signature</Text>
-                            </>
-                        )}
-                    </View>
+                {/* Thin bottom branding */}
+                <View style={{ position: 'absolute', bottom: 20, left: 30, right: 30, borderTopWidth: 1, borderTopColor: '#f5f5f5', paddingTop: 5 }}>
+                    <Text style={{ fontSize: 7, color: '#ccc', textAlign: 'center' }}>Generated via HappyInvoice</Text>
                 </View>
+
             </Page>
         </Document>
     );
